@@ -4,7 +4,7 @@ Hands-on Azure projects by Christopher M. Huffstetler. Each folder is a standalo
 
 | # | Project | Azure services | Status |
 |---|---------|----------------|--------|
-| 01 | [Recipe Cookbook](01-recipe-cookbook/) | Static Web Apps, Azure Functions, Cosmos DB | Not started |
+| 01 | [Recipe Cookbook](01-recipe-cookbook/) | Static Web Apps, Azure Functions, Cosmos DB | Complete |
 | 02 | [AI Photo Inspector](02-ai-photo-inspector/) | AI Vision | Not started |
 | 03 | [Audiobook Generator](03-audiobook-generator/) | AI Speech | Not started |
 | 04 | [3-Tier Web App](04-three-tier-web-app/) | App Service, Azure SQL | Not started |

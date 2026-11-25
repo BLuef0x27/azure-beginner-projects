@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe Cookbook</title>
+<style>body{font-family:system-ui;max-width:720px;margin:2rem auto;padding:0 1rem}input,textarea{width:100%;margin:.25rem 0 .75rem;padding:.4rem}.card{border:1px solid #ddd;border-radius:8px;padding:1rem;margin:.75rem 0}</style>
+</head>
+<body>
+<h1>Recipe Cookbook</h1>
+<form id="f">
+  <label>Title<input id="title" maxlength="120" required></label>
+  <label>Ingredients (one per line)<textarea id="ing" rows="4"></textarea></label>
+  <label>Steps (one per line)<textarea id="steps" rows="4"></textarea></label>
+  <button>Add recipe</button>
+</form>
+<div id="list"></div>
+<script>
+const lines = s => s.split("\n").map(x => x.trim()).filter(Boolean);
+async function load() {
+  const r = await fetch("/api/recipes");
+  const items = await r.json();
+  document.getElementById("list").replaceChildren(...items.map(it => {
+    const d = document.createElement("div"); d.className = "card";
+    const h = document.createElement("h3"); h.textContent = it.title;
+    const p = document.createElement("p"); p.textContent = (it.ingredients || []).join(", ");
+    d.append(h, p); return d;
+  }));
+}
+document.getElementById("f").addEventListener("submit", async e => {
+  e.preventDefault();
+  await fetch("/api/recipes", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({title: document.getElementById("title").value,
+      ingredients: lines(document.getElementById("ing").value),
+      steps: lines(document.getElementById("steps").value)})});
+  e.target.reset(); load();
+});
+load();
+</script>
+</body></html>
